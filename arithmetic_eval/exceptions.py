@@ -1,0 +1,2 @@
+class MaliciousInputError(Exception):
+    pass
