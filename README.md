@@ -1,7 +1,7 @@
 # arithmeval - Arithmetic Expression Evaluator
 
 [![PyPI Version](https://img.shields.io/pypi/v/arithmeval)](https://pypi.org/project/arithmeval/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/github/license/enesklcarslan/arithmeval)](https://github.com/enesklcarslan/arithmeval/blob/main/LICENSE)
 
 `arithmeval` is a Python package that provides a utility function to evaluate arithmetic expressions, given a dictionary of values. It supports basic arithmetic operations and can handle simple mathematical calculations.
 It also supports string concatenation, though it is not intended to be used as a general-purpose expression evaluator, therefore tests for string concatenation are not included.
@@ -88,7 +88,7 @@ If you insist on overriding the default return value for arithmetic exceptions, 
 A list of arithmetic exceptions can be found [here](https://docs.python.org/3/library/exceptions.html#ArithmeticError).
 
 ## License
-This package is distributed under the MIT License.
+This package is distributed under the BSD 3-Clause License. See [LICENSE](https://github.com/enesklcarslan/arithmeval/blob/main/LICENSE)
 
 ## Contributing
 Contributions to arithmeval are welcome! Feel free to open issues or pull requests on the GitHub repository.
