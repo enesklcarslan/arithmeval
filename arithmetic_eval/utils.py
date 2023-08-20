@@ -47,8 +47,12 @@ def evaluate(
         expression = expression.body
 
     if isinstance(expression, ast.BinOp):
-        left = evaluate(expression.left, value_dict)
-        right = evaluate(expression.right, value_dict)
+        left = evaluate(
+            expression.left, value_dict, arithmetic_exception_to_default_value
+        )
+        right = evaluate(
+            expression.right, value_dict, arithmetic_exception_to_default_value
+        )
         op = expression.op
         if isinstance(op, ARITHMETIC_OPERATIONS):
             try:
