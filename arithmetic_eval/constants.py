@@ -12,9 +12,9 @@ from ast import (
     Not,
     operator,
 )
-from typing import Callable
+from typing import Callable, Dict, Type
 
-ARITHMETIC_OPERATION_TO_OPERATOR: dict[type[operator], Callable] = {
+ARITHMETIC_OPERATION_TO_OPERATOR: Dict[Type[operator], Callable] = {
     # Binary operator tokens
     Add: add,  # +
     Div: truediv,  # /
@@ -28,19 +28,19 @@ ARITHMETIC_OPERATION_TO_OPERATOR: dict[type[operator], Callable] = {
 
 ARITHMETIC_OPERATIONS = tuple(ARITHMETIC_OPERATION_TO_OPERATOR.keys())
 
-BOOLEAN_BIN_OPERATION_TO_OPERATOR: dict[type[operator], Callable] = {
+BOOLEAN_BIN_OPERATION_TO_OPERATOR: Dict[Type[operator], Callable] = {
     And: lambda left, right: bool(left) and bool(right),
     Or: lambda left, right: bool(left) or bool(right),
 }
 
-BOOLEAN_UNARY_OPERATION_TO_OPERATOR: dict[type[operator], Callable] = {
+BOOLEAN_UNARY_OPERATION_TO_OPERATOR: Dict[Type[operator], Callable] = {
     Not: not_,
 }
 
 BOOLEAN_BIN_OPERATIONS = tuple(BOOLEAN_BIN_OPERATION_TO_OPERATOR.keys())
 BOOLEAN_UNARY_OPERATIONS = tuple(BOOLEAN_UNARY_OPERATION_TO_OPERATOR.keys())
 
-ARITHMETIC_ERROR_TO_DEFAULT_VALUE: dict[type[ArithmeticError], int] = {
+ARITHMETIC_ERROR_TO_DEFAULT_VALUE: Dict[Type[ArithmeticError], int] = {
     # Built-in exceptions
     FloatingPointError: 0,
     OverflowError: 0,

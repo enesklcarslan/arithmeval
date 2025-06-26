@@ -14,11 +14,11 @@ from arithmetic_eval.exceptions import MaliciousInputError
 
 def evaluate(
     expression: typing.Union[str, ast.AST],
-    value_dict: typing.Optional[dict] = None,
-    arithmetic_exception_to_default_value: dict[
-        type[ArithmeticError], int
+    value_dict: typing.Optional[typing.Dict[str, typing.Any]] = None,
+    arithmetic_exception_to_default_value: typing.Dict[
+        typing.Type[ArithmeticError], int
     ] = ARITHMETIC_ERROR_TO_DEFAULT_VALUE,
-) -> int | float | str | bool:
+) -> typing.Union[int, float, str, bool]:
     """Calculates the value of a string expression, given a dictionary of values.
 
     It supports arithmetic and boolean operations.
@@ -30,7 +30,7 @@ def evaluate(
         expression (str): The string expression to be evaluated.
 
     Returns:
-        int | float | str | bool: The result of the expression.
+        typing.Union[int, float, str, bool]: The result of the expression.
 
     Raises:
         SyntaxError: If the expression is not a valid Python expression.
