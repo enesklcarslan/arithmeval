@@ -3,6 +3,10 @@ import typing
 from arithmetic_eval.constants import (
     ARITHMETIC_OPERATIONS,
     ARITHMETIC_OPERATION_TO_OPERATOR,
+    BOOLEAN_BIN_OPERATIONS,
+    BOOLEAN_BIN_OPERATION_TO_OPERATOR,
+    BOOLEAN_UNARY_OPERATIONS,
+    BOOLEAN_UNARY_OPERATION_TO_OPERATOR,
     ARITHMETIC_ERROR_TO_DEFAULT_VALUE,
 )
 from arithmetic_eval.exceptions import MaliciousInputError
@@ -10,14 +14,14 @@ from arithmetic_eval.exceptions import MaliciousInputError
 
 def evaluate(
     expression: typing.Union[str, ast.AST],
-    value_dict: typing.Optional[dict] = None,
-    arithmetic_exception_to_default_value: dict[
-        type[ArithmeticError], int
+    value_dict: typing.Optional[typing.Dict[str, typing.Any]] = None,
+    arithmetic_exception_to_default_value: typing.Dict[
+        typing.Type[ArithmeticError], int
     ] = ARITHMETIC_ERROR_TO_DEFAULT_VALUE,
-) -> int | float | str:
+) -> typing.Union[int, float, str, bool]:
     """Calculates the value of a string expression, given a dictionary of values.
 
-    It only supports arithmetic operations.
+    It supports arithmetic and boolean operations.
     Example for expression: "a + b"
     Example for values_dict: {"a": 1, "b": 2}
     The output will be 3.
@@ -26,7 +30,7 @@ def evaluate(
         expression (str): The string expression to be evaluated.
 
     Returns:
-        int | float | str: The result of the expression.
+        typing.Union[int, float, str, bool]: The result of the expression.
 
     Raises:
         SyntaxError: If the expression is not a valid Python expression.
@@ -68,6 +72,32 @@ def evaluate(
             raise NotImplementedError(
                 f"Operation {op} not implemented. "
                 f"Must be one of {', '.join(map(str, ARITHMETIC_OPERATIONS))}"
+            )
+    elif isinstance(expression, ast.BoolOp):
+        values = [
+            evaluate(value, value_dict, arithmetic_exception_to_default_value)
+            for value in expression.values
+        ]
+        op = expression.op
+        if isinstance(op, BOOLEAN_BIN_OPERATIONS):
+            if isinstance(op, ast.And):
+                return all(values)
+            else:
+                return any(values)
+        else:
+            raise NotImplementedError(
+                f"Operation {op} not implemented. Must be one of {', '.join(map(str, BOOLEAN_BIN_OPERATIONS))}"
+            )
+    elif isinstance(expression, ast.UnaryOp):
+        operand = evaluate(
+            expression.operand, value_dict, arithmetic_exception_to_default_value
+        )
+        op = expression.op
+        if isinstance(op, BOOLEAN_UNARY_OPERATIONS):
+            return BOOLEAN_UNARY_OPERATION_TO_OPERATOR[op.__class__](operand)
+        else:
+            raise NotImplementedError(
+                f"Unary operation {op} not implemented. Must be one of {', '.join(map(str, BOOLEAN_UNARY_OPERATIONS))}"
             )
     elif isinstance(expression, ast.Name):
         try:
