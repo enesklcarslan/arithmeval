@@ -2,11 +2,13 @@
 
 [![PyPI Version](https://img.shields.io/pypi/v/arithmeval)](https://pypi.org/project/arithmeval/)
 [![License](https://img.shields.io/github/license/enesklcarslan/arithmeval)](https://github.com/enesklcarslan/arithmeval/blob/main/LICENSE)
+[![Tests](https://github.com/enesklcarslan/arithmeval/actions/workflows/tests.yml/badge.svg)](https://github.com/enesklcarslan/arithmeval/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/enesklcarslan/arithmeval/branch/main/graph/badge.svg)](https://codecov.io/gh/enesklcarslan/arithmeval)
 
 `arithmeval` is a Python package that provides a utility function to evaluate arithmetic expressions, given a dictionary of values. It supports basic arithmetic operations and can handle simple mathematical calculations.
 It also supports string concatenation, though it is not intended to be used as a general-purpose expression evaluator, therefore tests for string concatenation are not included.
 
-**Arithmeval is a secure, safety-first expression evaluator. It only supports the following list of operations:**
+**Arithmeval is a secure, safety-first expression evaluator. It supports the following list of operations:**
 
 - Addition (`+`)
 - True division (`/`)
@@ -15,6 +17,9 @@ It also supports string concatenation, though it is not intended to be used as a
 - Multiplication (`*`)
 - Exponentiation (`**`)
 - Subtraction (`-`)
+- Logical AND (`and`)
+- Logical OR (`or`)
+- Logical NOT (`not`)
 
 ## Installation
 
