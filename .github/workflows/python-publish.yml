@@ -18,7 +18,7 @@ on:
   #   types: [published]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -39,6 +39,18 @@ jobs:
       run: python -m build
     - name: Run Unit Tests
       run: python -m unittest discover
+    - name: Get version
+      id: get_version
+      run: echo "version=$(grep -m1 ^version setup.cfg | cut -d'=' -f2 | tr -d ' ')" >> "$GITHUB_OUTPUT"
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "v${{ steps.get_version.outputs.version }}"
+        name: "Release v${{ steps.get_version.outputs.version }}"
+        generate_release_notes: true
+        files: dist/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
